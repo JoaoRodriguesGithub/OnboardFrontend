@@ -11,7 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { NewTransactionComponent } from './transactions/new-transaction/new-transaction.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 
@@ -32,7 +32,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
