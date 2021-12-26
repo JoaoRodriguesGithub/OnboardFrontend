@@ -14,6 +14,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { PastTransactionsComponent } from './transactions/past-transactions/past-transactions.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     NewTransactionComponent,
     WelcomeComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    PastTransactionsComponent
   ],
   imports: [
     BrowserModule,
