@@ -1,0 +1,57 @@
+<section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Edit the date information</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Edit the category</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a category</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let category of categories" [value]="category.value">
+              {{ category.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Edit the value</ng-template>
+      <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label>Insert the value</mat-label>
+        <input matInput type="number" [(ngModel)]="value" />
+        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</section>

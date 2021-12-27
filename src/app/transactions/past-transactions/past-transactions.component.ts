@@ -22,7 +22,7 @@ const ELEMENT_DATA: Transaction[] = [
   styleUrls: ['./past-transactions.component.css']
 })
 export class PastTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'date', 'category', 'amount'];
+  displayedColumns: string[] = ['position', 'date', 'category', 'amount', 'actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor() { }
