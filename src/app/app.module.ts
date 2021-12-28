@@ -16,6 +16,10 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { PastTransactionsComponent } from './transactions/past-transactions/past-transactions.component';
 import { EditTransactionComponent } from './transactions/edit-transaction/edit-transaction.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AddUserComponent } from './profile/add-user/add-user.component';
+import { UserListComponent } from './profile/user-list/user-list.component';
+import { EditUserComponent } from './profile/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { EditTransactionComponent } from './transactions/edit-transaction/edit-t
     HeaderComponent,
     SidenavListComponent,
     PastTransactionsComponent,
-    EditTransactionComponent
+    EditTransactionComponent,
+    ProfileComponent,
+    AddUserComponent,
+    UserListComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
