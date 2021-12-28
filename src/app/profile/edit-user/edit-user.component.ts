@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+interface Roles {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-edit-user',
@@ -6,10 +12,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
+  selectedValue: string;
 
-  constructor() { }
+  companies: Roles[] = [
+    { value: 'Role-0', viewValue: 'Administrator' },
+    { value: 'Role-1', viewValue: 'User' }
+  ];
 
-  ngOnInit(): void {
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  onSubmit(form: NgForm) {
+    console.log(form);
   }
-
 }
