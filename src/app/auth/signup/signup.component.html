@@ -7,8 +7,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Select the company</mat-label>
       <mat-select [(ngModel)]="selectedValue" name="company">
-        <mat-option *ngFor="let company of companies" [value]="company.value">
-          {{company.viewValue}}
+        <mat-option *ngFor="let company of companies" [value]="company.companyName">
+          {{company.companyName}}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-interface Companies {
-  value: string;
-  viewValue: string;
-}
+import { Company } from 'src/app/models/company.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,20 +9,26 @@ interface Companies {
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  
+  companies: Company[];
+  
   selectedValue: string;
 
-  companies: Companies[] = [
-    { value: 'Company-0', viewValue: 'onBoard' },
-    { value: 'Company-1', viewValue: 'xpto' },
-    { value: 'Company-2', viewValue: 'r2022' },
-    { value: 'Company-3', viewValue: 'IPCA' },
-  ];
+  constructor(private authService:AuthService) {}
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.getCompanies(this.companies).subscribe(
+      (resp) => {
+        this.loadCompanies(resp);
+      }
+    )
+  }
 
   onSubmit(form: NgForm) {
     console.log(form);
+  }
+
+  loadCompanies(companies){
+    this.companies = companies;
   }
 }
