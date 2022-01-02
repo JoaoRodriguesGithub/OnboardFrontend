@@ -20,6 +20,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { AddUserComponent } from './profile/add-user/add-user.component';
 import { UserListComponent } from './profile/user-list/user-list.component';
 import { EditUserComponent } from './profile/edit-user/edit-user.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,10 @@ import { EditUserComponent } from './profile/edit-user/edit-user.component';
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
