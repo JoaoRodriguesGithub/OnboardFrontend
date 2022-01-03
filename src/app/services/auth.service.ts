@@ -5,16 +5,16 @@ import { baseUrl } from "src/environments/environment";
 
 
 @Injectable()
-export class AuthService{
+export class AuthService {
 
-constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-login(data):Observable<any> {
-  return this.http.post(`${baseUrl}auth/signin`, data);
-}
+  login(data): Observable<any> {
+    return this.http.post(`${baseUrl}auth/signin`, data);
+  }
 
-getCompanies(companies):Observable<any> {
-  return this.http.get(`${baseUrl}auth/signup`)
-}
+  getCompanies(companies): Observable<any> {
+    return this.http.get(`${baseUrl}auth/signup`)
+  }
 
 };
