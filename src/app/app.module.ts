@@ -22,6 +22,8 @@ import { UserListComponent } from './profile/user-list/user-list.component';
 import { EditUserComponent } from './profile/edit-user/edit-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { AuthService } from './services/auth.service';
     ProfileComponent,
     AddUserComponent,
     UserListComponent,
-    EditUserComponent
+    EditUserComponent,
+    NotFoundComponent,
+    InternalServerComponent
   ],
   imports: [
     BrowserModule,

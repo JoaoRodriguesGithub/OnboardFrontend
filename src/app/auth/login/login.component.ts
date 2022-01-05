@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private errorHandler: ErrorHandlerService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -24,11 +26,16 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(result => {
-        localStorage.setItem('token', result.token)
+        localStorage.setItem('token', JSON.stringify(result.token))
+        console.log(result.token)
         this.router.navigate(['transactions'])
       },
-        err => alert(err.error.error)
-      );
+        (error) => {
+          this.errorHandler.handleError(error);
+          this.errorMessage = this.errorHandler.errorMessage;
+
+        }
+      );  
     }
   }
 }

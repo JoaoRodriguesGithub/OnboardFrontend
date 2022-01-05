@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Company } from 'src/app/models/company.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,17 +10,22 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  
+
   companies: Company[];
-  
+  errorMessage: string = '';
+
   selectedValue: string;
 
-  constructor(private authService:AuthService) {}
+  constructor(private authService: AuthService, private errorHandler: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.authService.getCompanies(this.companies).subscribe(
       (resp) => {
         this.loadCompanies(resp);
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
       }
     )
   }
@@ -28,7 +34,7 @@ export class SignupComponent implements OnInit {
     console.log(form);
   }
 
-  loadCompanies(companies){
+  loadCompanies(companies) {
     this.companies = companies;
   }
 }
