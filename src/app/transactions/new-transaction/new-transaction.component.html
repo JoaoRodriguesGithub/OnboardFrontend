@@ -20,8 +20,8 @@
         <mat-form-field appearance="fill">
           <mat-label>Choose a category</mat-label>
           <mat-select>
-            <mat-option *ngFor="let category of categories" [value]="category.value">
-              {{ category.viewValue }}
+            <mat-option *ngFor="let category of categories" [value]="category.categoryName">
+              {{ category.categoryName }}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators} from '@angular/forms';
-
-interface Categories {
-  value: string;
-  viewValue: string;
-}
+import { FormGroup } from '@angular/forms';
+import { Category } from 'src/app/models/category.model';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { TransactionsService } from 'src/app/services/transactions.service';
 
 @Component({
   selector: 'app-new-transaction',
   templateUrl: './new-transaction.component.html',
-  styleUrls: ['./new-transaction.component.css']
+  styleUrls: ['./new-transaction.component.css'],
 })
 export class NewTransactionComponent implements OnInit {
   selectedValue: string;
@@ -18,16 +16,28 @@ export class NewTransactionComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
-  categories: Categories[] = [
-    { value: 'category-0', viewValue: 'Accommodation' },
-    { value: 'category-1', viewValue: 'Travel' },
-    { value: 'category-2', viewValue: 'Food' },
-  ];
+  categories: Category[];
+  errorMessage: string = '';
 
-  constructor() {}
+  constructor(
+    private transactionsService: TransactionsService,
+    private errorHandler: ErrorHandlerService
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.transactionsService.getCategories().subscribe(
+      (resp) => {
+        this.loadTansactions(resp);
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      }
+    );
+  }
 
+  loadTansactions(categories) {
+    this.categories= categories;
   }
 
 }

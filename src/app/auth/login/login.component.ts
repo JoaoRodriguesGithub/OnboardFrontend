@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private errorHandler: ErrorHandlerService) { }
+  constructor(private authService: AuthService, private router: Router, private errorHandler: ErrorHandlerService, private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -26,11 +27,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(result => {
-        localStorage.setItem('token', JSON.stringify(result.token))
+        this.localStorageService.set('token', result.token)
         console.log(result.token)
         this.router.navigate(['transactions'])
       },
-        (error) => {
+        (error) => {                         
           this.errorHandler.handleError(error);
           this.errorMessage = this.errorHandler.errorMessage;
 
