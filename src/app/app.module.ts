@@ -24,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
+import { ProfileService } from './services/profile.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { TransactionsService } from './services/transactions.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,7 @@ import { InternalServerComponent } from './error-pages/internal-server/internal-
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ProfileService, TransactionsService ,LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
