@@ -15,6 +15,16 @@ export class TransactionsService {
       'Authorization': `Bearer ${this.token}`,
     }
 
-    return this.http.get(`${baseUrl}v1/transactions/categories`, {headers: new HttpHeaders(headerDict)})
-  };                                                                
+    return this.http.get(`${baseUrl}v1/transactions/categories`, { headers: new HttpHeaders(headerDict) })
+  };
+
+  getTransaction(): Observable<any> {
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
+
+    return this.http.get(`${baseUrl}v1/transactions`, { headers: new HttpHeaders(headerDict) })
+  };
+
+
 }
