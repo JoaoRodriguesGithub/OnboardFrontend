@@ -32,8 +32,17 @@ export class SignupComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log(form);
+    if (form.valid) {
+      this.authService.signup(form.value).subscribe(result => {
+        console.log(result);
+      }),
+        (error) => {
+          this.errorHandler.handleError(error);
+          this.errorMessage = this.errorHandler.errorMessage;
+        };
+    }
   }
-
+  
   loadCompanies(companies) {
     this.companies = companies;
   }

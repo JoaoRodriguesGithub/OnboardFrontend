@@ -17,4 +17,9 @@ export class AuthService {
     return this.http.get(`${baseUrl}auth/signup`)
   }
 
+  signup(form): Observable<any> {
+    debugger
+    return this.http.post(`${baseUrl}auth/signup`, form);
+  }
+
 };
