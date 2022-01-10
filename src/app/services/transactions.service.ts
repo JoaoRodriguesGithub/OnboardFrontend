@@ -26,5 +26,15 @@ export class TransactionsService {
     return this.http.get(`${baseUrl}v1/transactions`, { headers: new HttpHeaders(headerDict) })
   };
 
+  postTransaction(form): Observable<any> {
+    debugger
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
+
+    return this.http.post(`${baseUrl}v1/transactions`, form, { headers: new HttpHeaders(headerDict)})
+  };
+
+
 
 }

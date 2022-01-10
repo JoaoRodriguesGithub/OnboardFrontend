@@ -27,6 +27,7 @@ import { InternalServerComponent } from './error-pages/internal-server/internal-
 import { ProfileService } from './services/profile.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TransactionsService } from './services/transactions.service';
+import { JWTTokenService } from './services/jwt-token.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { TransactionsService } from './services/transactions.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, ProfileService, TransactionsService ,LocalStorageService],
+  providers: [AuthService, ProfileService, TransactionsService ,LocalStorageService, JWTTokenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

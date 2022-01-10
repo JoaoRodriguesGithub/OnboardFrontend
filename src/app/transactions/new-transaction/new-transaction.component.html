@@ -1,4 +1,31 @@
-<section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+<section class="signup-form">
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" ngModel formControlName="date"/>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a category</mat-label>
+      <mat-select formControlName="category_id" [(value)]="selectedValue" >
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.categoryName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Insert the value</mat-label>
+      <input type="number" matInput placeholder="Insert value" ngModel formControlName="amount" >
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
+</section>
+
+<!-- <section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
@@ -54,4 +81,66 @@
       </div>
     </mat-step>
   </mat-stepper>
-</section>
+</section> -->
+
+<!-- <section fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <mat-vertical-stepper 
+  #linearVerticalStepper="matVerticalStepper"
+  formArrayName="formArray"
+  [linear]="false">
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+        <ng-template matStepLabel>Fill the date information</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateFormCtrl" required/>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+
+    <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+        <ng-template matStepLabel>Fill out the category</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a category</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let category of categories, let i = index" [value]="category.id" formControlName="categoryFormCtrl" required>
+              {{ category.categoryName[i] }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+
+    <mat-step formGroupName="2" [stepControl]="formArray?.get([2])">
+      <ng-template matStepLabel>Fill de transactions value</ng-template>
+      <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label>Insert the value</mat-label>
+        <input matInput type="number" [(ngModel)]="value" formControlName="amountFormCtrl" required/>
+        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="linearVerticalStepper.reset()">Reset</button>
+        <button type="submit" mat-button >Done</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
+</section> -->
