@@ -27,7 +27,6 @@ export class TransactionsService {
   };
 
   postTransaction(form): Observable<any> {
-    debugger
     const headerDict = {
       'Authorization': `Bearer ${this.token}`,
     }
