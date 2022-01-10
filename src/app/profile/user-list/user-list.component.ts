@@ -51,16 +51,16 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileService.getUsers().subscribe(
-      (resp) => {
-        console.log(resp);
-        this.loadUsers(resp);
-      },
-      (error) => {
-        this.errorHandler.handleError(error);
-        this.errorMessage = this.errorHandler.errorMessage;
-      }
-    );
+    // this.profileService.getUsers().subscribe(
+    //   (resp) => {
+    //     console.log(resp);
+    //     this.loadUsers(resp);
+    //   },
+    //   (error) => {
+    //     this.errorHandler.handleError(error);
+    //     this.errorMessage = this.errorHandler.errorMessage;
+    //   }
+    // );
   }
 
   applyFilter(event: Event) {
