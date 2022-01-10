@@ -3,18 +3,15 @@ import jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class JWTTokenService {
+  token: string;
 
-    token: string;
+  constructor() {}
 
-    constructor() {
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
     }
-
-    getDecodedAccessToken(token: string): any {
-      try{
-          return jwt_decode(token);
-      }
-      catch(Error){
-          return null;
-      }
-    }
+  }
 }
