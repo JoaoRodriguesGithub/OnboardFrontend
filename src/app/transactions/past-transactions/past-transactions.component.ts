@@ -52,4 +52,15 @@ export class PastTransactionsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  deleteBotton(element) {
+    this.transactionService.deleteTransaction(element.id).subscribe(
+      () => {
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      }
+    );
+  }
+
 }

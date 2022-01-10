@@ -34,6 +34,12 @@ export class TransactionsService {
     return this.http.post(`${baseUrl}v1/transactions`, form, { headers: new HttpHeaders(headerDict)})
   };
 
+  deleteTransaction(transactionId): Observable<any> {
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
 
+    return this.http.delete(`${baseUrl}v1/transactions/${transactionId}`, { headers: new HttpHeaders(headerDict) })
+  };
 
 }
