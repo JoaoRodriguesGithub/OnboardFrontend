@@ -11,15 +11,13 @@ export class ProfileService {
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService
-  ) {}
+  ) { }
 
-  getUsers(): Observable<any> {
+  getUsers(): Observable<any> {debugger
     const headerDict = {
-      Authorization: `Bearer ${this.token}`,
-    };
+      'Authorization': `Bearer ${this.token}`,
+    }
 
-    return this.http.get(`${baseUrl}v1/users`, {
-      headers: new HttpHeaders(headerDict),
-    });
-  }
+    return this.http.get(`${baseUrl}v1/users`, { headers: new HttpHeaders(headerDict) })
+  };
 }
