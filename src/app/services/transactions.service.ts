@@ -42,4 +42,11 @@ export class TransactionsService {
     return this.http.delete(`${baseUrl}v1/transactions/${transactionId}`, { headers: new HttpHeaders(headerDict) })
   };
 
+  editTransaction(data): Observable<any> {
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
+
+    return this.http.put(`${baseUrl}v1/transactions/${data.id}`, data , { headers: new HttpHeaders(headerDict) })
+  }
 }
