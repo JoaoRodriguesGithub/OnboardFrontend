@@ -4,31 +4,6 @@ import { User } from 'src/app/models/users.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
-
-
-// const ELEMENT_DATA: User[] = [
-//   {
-//     name: 'João Rodrigues',
-//     email: 'joaorodrigues@onboard.com',
-//     role: 'Administrator',
-//   },
-//   {
-//     name: 'Jorge Rodrigues',
-//     email: 'jorgerodrigues@onboard.com',
-//     role: 'Administrator',
-//   },
-//   {
-//     name: 'Joana Fernandes',
-//     email: 'joanafernandes@onboard.com',
-//     role: 'User',
-//   },
-//   {
-//     name: 'Teresa Domingues',
-//     email: 'teresadomingues@onboard.com',
-//     role: 'User',
-//   },
-//   { name: 'António Silva', email: 'antoniosilva@onboard.com', role: 'User' },
-// ];
 const ELEMENT_DATA: User[] = [];
 
 @Component({
@@ -47,10 +22,8 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
     this.profileService.getUsers().subscribe(
       (resp) => {
-        console.log(resp);
         this.dataSource = resp
       },
       (error) => {
