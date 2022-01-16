@@ -31,6 +31,14 @@ export class NewTransactionComponent implements OnInit {
       amount: new FormControl('', { validators: [Validators.required] }),
     });
 
+    this.transactionsService.getTransaction().subscribe((resp) =>{
+      console.log(resp)
+    },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      });
+
     this.transactionsService.getCategories().subscribe(
       (resp) => {
         this.loadTansactions(resp);
@@ -63,6 +71,8 @@ export class NewTransactionComponent implements OnInit {
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
+    this.ngOnInit()
+    
   }
 
   loadTansactions(categories) {

@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 @Component({
@@ -12,12 +13,14 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   
   }
+  constructor(private localStorageService: LocalStorageService){}
 
   onToggleSidenav() {
     this.sidenavToggle.emit();
   }
 
   onLogout() {
+    this.localStorageService.clear()
 
   }
 }

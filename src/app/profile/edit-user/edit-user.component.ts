@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-
-interface Roles {
-  value: string;
-  viewValue: string;
-}
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { JWTTokenService } from 'src/app/services/jwt-token.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -12,18 +12,49 @@ interface Roles {
   styleUrls: ['./edit-user.component.css']
 })
 export class EditUserComponent implements OnInit {
-  selectedValue: string;
+  //variable to display the error message on HTML
+  errorMessage: string = '';
+  //variable for the HTML form
+  formGroup: FormGroup;
 
-  companies: Roles[] = [
-    { value: 'Role-0', viewValue: 'Administrator' },
-    { value: 'Role-1', viewValue: 'User' }
-  ];
+  constructor(
+    private errorHandler: ErrorHandlerService,
+    private profileService: ProfileService,
+    private localStorageService: LocalStorageService,
+    private jwtTokenService: JWTTokenService,
+    private activeRoute: ActivatedRoute
+  ) { }
 
-  constructor() {}
+  ngOnInit(): void {
+    //Setting up the form validators
+    this.formGroup = new FormGroup({
+      name: new FormControl('', { validators: [Validators.required] }),
+    });
+  }
 
-  ngOnInit(): void {}
+  onSubmit() {
+    const tokenString = this.localStorageService.get('token');
+    const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
+    const userId = tokenInfo.id;
 
-  onSubmit(form: NgForm) {
-    console.log(form);
+    const profileId = this.activeRoute.snapshot.params['id'];
+
+    // const ctrl = new FormControl(userId);
+    const ctrl2 = new FormControl(profileId);
+
+
+    // this.formGroup.addControl('user_id', ctrl);
+    this.formGroup.addControl('id', ctrl2);
+
+    if (this.formGroup.valid) {
+      this.profileService
+        .editUser(this.formGroup.value)
+        .subscribe(() => {
+        }),
+        (error) => {
+          this.errorHandler.handleError(error);
+          this.errorMessage = this.errorHandler.errorMessage;
+        };
+    }
   }
 }

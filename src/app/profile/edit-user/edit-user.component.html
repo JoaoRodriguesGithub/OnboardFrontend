@@ -1,22 +1,10 @@
-<section class="editUser-form">
-  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input type="text" matInput placeholder="Edit your name" ngModel name="name" text required #nameInput="ngModel">
-      <mat-error *ngIf="nameInput.hasError('required')">Field must not be empty.</mat-error>
-    </mat-form-field>
+<section class="signup-form">
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="formGroup"
+    (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
-      <mat-label>Edit your Role</mat-label>
-      <mat-select [(ngModel)]="selectedValue" name="company">
-        <mat-option *ngFor="let company of companies" [value]="company.value">
-          {{company.viewValue}}
-        </mat-option>
-      </mat-select>
+      <mat-label>Edit the Name</mat-label>
+      <input type="name" matInput placeholder="Insert Name" ngModel formControlName="name">
     </mat-form-field>
-    <mat-form-field hintLabel="Should be at least 6 characters long.">
-      <input type="password" matInput placeholder="Edit your password" ngModel name="password" required minlength="6" #pwInput="ngModel">
-      <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
-      <mat-error>Has to be at least 6 characters long.</mat-error>
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Update</button>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
   </form>
 </section>
