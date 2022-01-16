@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { JWTTokenService } from 'src/app/services/jwt-token.service';
@@ -11,18 +12,18 @@ import { TransactionsService } from 'src/app/services/transactions.service';
   templateUrl: './new-transaction.component.html',
   styleUrls: ['./new-transaction.component.css'],
 })
-export class NewTransactionComponent implements OnInit {
+export class NewTransactionComponent implements OnInit, OnChanges {
   errorMessage: string = '';
   categories: Category[];
   selectedValue: string;
   formGroup: FormGroup;
-
+ 
   constructor(
     private errorHandler: ErrorHandlerService,
     private transactionsService: TransactionsService,
     private localStorageService: LocalStorageService,
     private jwtTokenService: JWTTokenService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -31,7 +32,7 @@ export class NewTransactionComponent implements OnInit {
       amount: new FormControl('', { validators: [Validators.required] }),
     });
 
-    this.transactionsService.getTransaction().subscribe((resp) =>{
+    this.transactionsService.getTransaction().subscribe((resp) => {
       console.log(resp)
     },
       (error) => {
@@ -71,8 +72,10 @@ export class NewTransactionComponent implements OnInit {
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
-    this.ngOnInit()
-    
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('param change ', changes);
   }
 
   loadTansactions(categories) {

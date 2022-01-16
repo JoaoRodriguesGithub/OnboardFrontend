@@ -76,6 +76,7 @@ export class EditTransactionComponent implements OnInit {
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
+    this.formGroup.reset();
   }
 
   loadTansactions(categories) {

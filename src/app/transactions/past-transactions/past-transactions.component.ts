@@ -38,16 +38,11 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.transactionService.getTransaction().subscribe(
-      (resp) => {
-        console.log(resp);
-        this.dataSource = resp;
-      },
-      (error) => {
-        this.errorHandler.handleError(error);
-        this.errorMessage = this.errorHandler.errorMessage;
-      }
-    );
+    this.getTransaction()
+
+    this.subscription = this.transactionService.refresh$.subscribe(() => {
+      this.getTransaction()
+    });
 
     this.transaction = {
       id: this.activeRoute.snapshot.params['id']
@@ -57,6 +52,18 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
         id: params['id']
       }
     })
+  }
+
+  getTransaction(): void {
+    this.subscription = this.transactionService.getTransaction().subscribe(
+      (resp) => {
+        console.log(resp);
+        this.dataSource = resp;
+      }),
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      }
   }
 
   applyFilter(event: Event) {
