@@ -1,10 +1,15 @@
 <section class="signup-form">
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="formGroup"
     (ngSubmit)="onSubmit()">
+
     <mat-form-field appearance="fill">
       <mat-label>Edit the Name</mat-label>
       <input type="name" matInput placeholder="Insert Name" ngModel formControlName="name">
+      <mat-error *ngIf=" formGroup.get('name').hasError('required')">
+        Please insert User name
+      </mat-error>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">Submit</button>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">Submit</button>
   </form>
 </section>
