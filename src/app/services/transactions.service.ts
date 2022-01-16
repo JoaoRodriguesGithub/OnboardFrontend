@@ -1,14 +1,20 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { baseUrl } from "src/environments/environment";
 import { LocalStorageService } from "./local-storage.service";
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class TransactionsService {
   token: string = this.localStorageService.get('token');
+  private _refresh$ = new Subject<void>();
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
+
+  get refresh$() {
+    return this._refresh$;
+  }
 
   getCategories(): Observable<any> {
     const headerDict = {
@@ -31,7 +37,12 @@ export class TransactionsService {
       'Authorization': `Bearer ${this.token}`,
     }
 
-    return this.http.post(`${baseUrl}v1/transactions`, form, { headers: new HttpHeaders(headerDict)})
+    return this.http.post(`${baseUrl}v1/transactions`, form, { headers: new HttpHeaders(headerDict) })
+      .pipe(
+        tap(() => {
+        this._refresh$.next();
+      })
+      )
   };
 
   deleteTransaction(transactionId): Observable<any> {
@@ -47,6 +58,6 @@ export class TransactionsService {
       'Authorization': `Bearer ${this.token}`,
     }
 
-    return this.http.put(`${baseUrl}v1/transactions/${data.id}`, data , { headers: new HttpHeaders(headerDict) })
+    return this.http.put(`${baseUrl}v1/transactions/${data.id}`, data, { headers: new HttpHeaders(headerDict) })
   }
 }
