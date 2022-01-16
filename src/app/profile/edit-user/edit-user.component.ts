@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { JWTTokenService } from 'src/app/services/jwt-token.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -20,8 +18,6 @@ export class EditUserComponent implements OnInit {
   constructor(
     private errorHandler: ErrorHandlerService,
     private profileService: ProfileService,
-    private localStorageService: LocalStorageService,
-    private jwtTokenService: JWTTokenService,
     private activeRoute: ActivatedRoute
   ) { }
 
@@ -33,17 +29,13 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit() {
-    const tokenString = this.localStorageService.get('token');
-    const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
-    const userId = tokenInfo.id;
-
+    //const to store the snapshot of user id on url
     const profileId = this.activeRoute.snapshot.params['id'];
-
-    // const ctrl = new FormControl(userId);
+    
+    //const to create a new control for profile id
     const ctrl2 = new FormControl(profileId);
 
-
-    // this.formGroup.addControl('user_id', ctrl);
+    //adding the form field id to de formgroup
     this.formGroup.addControl('id', ctrl2);
 
     if (this.formGroup.valid) {

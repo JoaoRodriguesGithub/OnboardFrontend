@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/users.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
@@ -19,13 +20,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   subscription: Subscription;
+  user: { id: number };
 
   constructor(
     private profileService: ProfileService,
     private errorHandler: ErrorHandlerService,
     private localStorageService: LocalStorageService,
     private jwtTokenService: JWTTokenService,
-
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -49,11 +51,22 @@ export class UserListComponent implements OnInit, OnDestroy {
         }
       );
     }
+
+    this.user = {
+      id: this.activeRoute.snapshot.params['id']
+    }
+    this.activeRoute.params.subscribe((params: Params) => {
+      this.user = {
+        id: params['id']
+      }
+    })
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

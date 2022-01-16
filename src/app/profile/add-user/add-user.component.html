@@ -3,20 +3,28 @@
 
     <mat-form-field>
       <input type="text" matInput placeholder="User name" formControlName="name">
+      <mat-error *ngIf=" formGroup.get('name').hasError('required')">
+        Please insert User name
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input type="email" matInput placeholder="User email" formControlName="email">
+      <mat-error *ngIf="formGroup.get('email').hasError('email') && !formGroup.get('email').hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="formGroup.get('email').hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
 
   <mat-form-field hintLabel="Should be at least 6 characters long.">
     <input type="password" matInput placeholder="User password" formControlName="password">
+    <mat-error *ngIf=" formGroup.get('password').hasError('required')">
+      Please insert an password
+    </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <input type="number" matInput placeholder="Role id" formControlName="role_id">
-  </mat-form-field>
-
-    <button type="submit" mat-raised-button color="primary">Submit</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">Submit</button>
   </form>
 </section>
