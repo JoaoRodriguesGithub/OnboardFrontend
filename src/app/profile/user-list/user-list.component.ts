@@ -74,6 +74,18 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
   }
 
+  deleteButton(element) {
+    this.profileService.deleteUser(element).subscribe(
+      () => {
+        this.ngOnInit();
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      }
+    );
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

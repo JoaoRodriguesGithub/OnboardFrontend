@@ -24,7 +24,7 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
         <button type="submit" mat-raised-button color="primary" [routerLink]="['/editprofile', element.id]">Edit</button>
-        <button type=" submit" mat-raised-button color="warn">Delete</button>
+        <button type=" submit" mat-raised-button color="warn" (click)= "deleteButton(element)">Delete</button>
       </td>
     </ng-container>
 
