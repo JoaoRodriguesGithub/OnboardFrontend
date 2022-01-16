@@ -46,11 +46,20 @@ export class ProfileService {
         })
       )
   };
+
   editUser(data): Observable<any> {
     const headerDict = {
       'Authorization': `Bearer ${this.token}`,
     }
 
     return this.http.put(`${baseUrl}v1/users/${data.id}`, data, { headers: new HttpHeaders(headerDict) })
-  }
+  };
+
+  deleteUser(data): Observable<any> {
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
+
+    return this.http.delete(`${baseUrl}v1/users/${data.id}`, { headers: new HttpHeaders(headerDict) })
+  };
 }

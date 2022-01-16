@@ -17,6 +17,9 @@ export class ErrorHandlerService {
     else if (error.status === 404) {
       this.handle404Error(error)
     }
+    else if (error.status === 403) {
+      this.handle403Error(error)
+    }
     else { this.handleOtherError(error) }
   };
 
@@ -27,6 +30,10 @@ export class ErrorHandlerService {
   private handle404Error = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);
     this.router.navigate(['/404'])
+  }
+  private handle403Error = (error: HttpErrorResponse) => {
+    this.createErrorMessage(error);
+    this.router.navigate(['/403'])
   }
   private handleOtherError = (error: HttpErrorResponse) => {
     this.createErrorMessage(error);

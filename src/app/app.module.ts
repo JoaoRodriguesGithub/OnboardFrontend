@@ -28,6 +28,7 @@ import { ProfileService } from './services/profile.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { TransactionsService } from './services/transactions.service';
 import { JWTTokenService } from './services/jwt-token.service';
+import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { JWTTokenService } from './services/jwt-token.service';
     UserListComponent,
     EditUserComponent,
     NotFoundComponent,
-    InternalServerComponent
+    InternalServerComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

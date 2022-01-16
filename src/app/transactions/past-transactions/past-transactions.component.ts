@@ -71,7 +71,7 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteBotton(element) {
+  deleteButton(element) {
     this.transactionService.deleteTransaction(element.id).subscribe(
       () => {
         this.ngOnInit();
