@@ -31,26 +31,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const tokenString = this.localStorageService.get('token');
-    const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
-    const userRoleId = tokenInfo.role_id;
-    const userId = tokenInfo.id;
-
-    if (userRoleId === 2) {
-      this.subscription = this.profileService.getUser(userId).subscribe((resp) => {
-        this.dataSource = resp
-      })
-    } else {
-      this.subscription = this.profileService.getUsers().subscribe(
-        (resp) => {
-          this.dataSource = resp
-        },
-        (error) => {
-          this.errorHandler.handleError(error);
-          this.errorMessage = this.errorHandler.errorMessage;
-        }
-      );
-    }
+    this.getUsers();
+    this.subscription = this.profileService.refresh$.subscribe(() => {
+      this.getUsers();
+    })
 
     this.user = {
       id: this.activeRoute.snapshot.params['id']
@@ -66,7 +50,30 @@ export class UserListComponent implements OnInit, OnDestroy {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
+
+  getUsers() {
+    const tokenString = this.localStorageService.get('token');
+    const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
+    const userRoleId = tokenInfo.role_id;
+    const userId = tokenInfo.id;
+
+    if (userRoleId === 2) {
+      this.subscription = this.profileService.getUser(userId).subscribe((resp) => {
+        this.dataSource.data = [resp]
+      })
+    } else {
+      this.subscription = this.profileService.getUsers().subscribe(
+        (resp) => {
+          this.dataSource = resp
+        },
+        (error) => {
+          this.errorHandler.handleError(error);
+          this.errorMessage = this.errorHandler.errorMessage;
+        }
+      );
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

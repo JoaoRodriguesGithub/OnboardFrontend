@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -18,7 +18,8 @@ export class EditUserComponent implements OnInit {
   constructor(
     private errorHandler: ErrorHandlerService,
     private profileService: ProfileService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +43,7 @@ export class EditUserComponent implements OnInit {
       this.profileService
         .editUser(this.formGroup.value)
         .subscribe(() => {
+          this.router.navigate(['profile'])
         }),
         (error) => {
           this.errorHandler.handleError(error);
