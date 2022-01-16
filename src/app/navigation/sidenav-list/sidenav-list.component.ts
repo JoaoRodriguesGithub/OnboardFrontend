@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -8,6 +9,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class SidenavListComponent  {
   @Output() closeSidenav = new EventEmitter<void>();
 
+  constructor( private localStorageService: LocalStorageService){}
+  
   ngOnInit() {
     
   }
@@ -17,6 +20,7 @@ export class SidenavListComponent  {
   }
 
   onLogout() {
+    this.localStorageService.clear();
     this.onClose();
   }
 }

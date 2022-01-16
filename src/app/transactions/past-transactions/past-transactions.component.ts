@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Transaction } from 'src/app/models/transaction.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionsService } from 'src/app/services/transactions.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 const ELEMENT_DATA: Transaction[] = [];
 
@@ -12,7 +13,7 @@ const ELEMENT_DATA: Transaction[] = [];
   templateUrl: './past-transactions.component.html',
   styleUrls: ['./past-transactions.component.css'],
 })
-export class PastTransactionsComponent implements OnInit {
+export class PastTransactionsComponent implements OnInit, OnDestroy {
   //variable to expose the error message
   errorMessage: string = '';
 
@@ -29,15 +30,15 @@ export class PastTransactionsComponent implements OnInit {
 
   //instancing the data source to use on HTML
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-
+  subscription: Subscription;
   constructor(
     private transactionService: TransactionsService,
     private errorHandler: ErrorHandlerService,
     private activeRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.transactionService.getTransaction().subscribe(
+    this.subscription = this.transactionService.getTransaction().subscribe(
       (resp) => {
         console.log(resp);
         this.dataSource = resp;
@@ -51,9 +52,9 @@ export class PastTransactionsComponent implements OnInit {
     this.transaction = {
       id: this.activeRoute.snapshot.params['id']
     }
-    this.activeRoute.params.subscribe((params:Params) => {
+    this.activeRoute.params.subscribe((params: Params) => {
       this.transaction = {
-        id: params ['id']
+        id: params['id']
       }
     })
   }
@@ -73,5 +74,8 @@ export class PastTransactionsComponent implements OnInit {
         this.errorMessage = this.errorHandler.errorMessage;
       }
     );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
