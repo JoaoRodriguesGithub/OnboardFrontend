@@ -12,7 +12,7 @@ import { TransactionsService } from 'src/app/services/transactions.service';
   templateUrl: './new-transaction.component.html',
   styleUrls: ['./new-transaction.component.css'],
 })
-export class NewTransactionComponent implements OnInit, OnChanges {
+export class NewTransactionComponent implements OnInit {
   errorMessage: string = '';
   categories: Category[];
   selectedValue: string;
@@ -72,10 +72,6 @@ export class NewTransactionComponent implements OnInit, OnChanges {
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
-
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('param change ', changes);
   }
 
   loadTansactions(categories) {

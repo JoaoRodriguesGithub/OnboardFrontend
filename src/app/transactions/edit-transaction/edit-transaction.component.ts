@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/models/category.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { JWTTokenService } from 'src/app/services/jwt-token.service';
@@ -30,7 +30,8 @@ export class EditTransactionComponent implements OnInit {
     private transactionsService: TransactionsService,
     private localStorageService: LocalStorageService,
     private jwtTokenService: JWTTokenService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,13 +71,13 @@ export class EditTransactionComponent implements OnInit {
       this.transactionsService
         .editTransaction(this.formGroup.value)
         .subscribe(() => {
+          this.router.navigate(['transactions'])
         }),
         (error) => {
           this.errorHandler.handleError(error);
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
-    this.formGroup.reset();
   }
 
   loadTansactions(categories) {

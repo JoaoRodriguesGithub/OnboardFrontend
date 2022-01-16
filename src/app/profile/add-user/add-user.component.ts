@@ -20,18 +20,18 @@ export class AddUserComponent implements OnInit {
   //variable to hold the formgroup subscription
   subscription: Subscription;
 
-  constructor( private errorHandler: ErrorHandlerService,
+  constructor(private errorHandler: ErrorHandlerService,
     private profileService: ProfileService,
     private localStorageService: LocalStorageService,
-    private jwtTokenService: JWTTokenService) {}
+    private jwtTokenService: JWTTokenService) { }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       name: new FormControl('', { validators: [Validators.required] }),
       email: new FormControl('', { validators: [Validators.required, Validators.email] }),
       password: new FormControl('', { validators: [Validators.required] }),
-  })
-}
+    })
+  }
 
   onSubmit() {
     //this variable gets the token from the local storage
@@ -42,7 +42,7 @@ export class AddUserComponent implements OnInit {
     const companyId = tokenInfo.company_id;
     //this variable will define that all new users created will be with role 2
     const roleId: number = 2;
-    
+
     //this variables creates two new form controls to be added on the fromGroup
     const ctrl = new FormControl(companyId);
     const ctrl2 = new FormControl(roleId);
@@ -63,7 +63,6 @@ export class AddUserComponent implements OnInit {
           this.errorMessage = this.errorHandler.errorMessage;
         };
     }
-    this.formGroup.reset();
   }
 
 }
