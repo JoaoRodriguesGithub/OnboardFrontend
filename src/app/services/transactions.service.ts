@@ -15,7 +15,7 @@ export class TransactionsService {
   get refresh$() {
     return this._refresh$;
   }
-
+  
   getCategories(): Observable<any> {
     const headerDict = {
       'Authorization': `Bearer ${this.token}`,
@@ -23,13 +23,21 @@ export class TransactionsService {
 
     return this.http.get(`${baseUrl}v1/transactions/categories`, { headers: new HttpHeaders(headerDict) })
   };
-
-  getTransaction(): Observable<any> {
+  
+  getTransactions(): Observable<any> {
     const headerDict = {
       'Authorization': `Bearer ${this.token}`,
     }
 
     return this.http.get(`${baseUrl}v1/transactions`, { headers: new HttpHeaders(headerDict) })
+  };
+
+  getTransaction(id): Observable<any> {
+    const headerDict = {
+      'Authorization': `Bearer ${this.token}`,
+    }
+
+    return this.http.get(`${baseUrl}v1/transactions/${id}`, { headers: new HttpHeaders(headerDict) })
   };
 
   postTransaction(form): Observable<any> {

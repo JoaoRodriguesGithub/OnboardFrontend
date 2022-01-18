@@ -25,6 +25,9 @@ export class EditTransactionComponent implements OnInit {
   //variable for the HTML form
   formGroup: FormGroup;
 
+  //valiable to store transaction id number
+  transactionId: { id: number };
+
   constructor(
     private errorHandler: ErrorHandlerService,
     private transactionsService: TransactionsService,
@@ -51,13 +54,18 @@ export class EditTransactionComponent implements OnInit {
         this.errorMessage = this.errorHandler.errorMessage;
       }
     );
+    //this calls the method to fill the edit form
+    this.fillForm();
   }
 
   onSubmit() {
+    //variable to store the token
     const tokenString = this.localStorageService.get('token');
+    //variable to decode the token
     const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
+    //variable to store the token id
     const userId = tokenInfo.id;
-
+    //variable to store the transaction id
     const transactionId = this.activeRoute.snapshot.params['id'];
 
     const ctrl = new FormControl(userId);
@@ -82,5 +90,16 @@ export class EditTransactionComponent implements OnInit {
 
   loadTansactions(categories) {
     this.categories = categories;
+  }
+
+  //This method fills does a request to get transaction info and does de form fill when editing a transaction
+  fillForm() {
+    const transactionId = this.activeRoute.snapshot.params['id'];
+
+    this.transactionsService.getTransaction(transactionId).subscribe((resp)=> {
+      this.formGroup.get('date').setValue(resp.date)
+      this.formGroup.get('category_id').setValue(resp.category_id)
+      this.formGroup.get('amount').setValue(resp.amount)
+    })
   }
 }
