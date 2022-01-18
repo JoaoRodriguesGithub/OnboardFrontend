@@ -30,7 +30,9 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
 
   //instancing the data source to use on HTML
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  //variable to subscribe
   subscription: Subscription;
+
   constructor(
     private transactionService: TransactionsService,
     private errorHandler: ErrorHandlerService,
@@ -38,10 +40,10 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getTransaction()
+    this.getTransactions()
 
     this.subscription = this.transactionService.refresh$.subscribe(() => {
-      this.getTransaction()
+      this.getTransactions()
     });
 
     this.transaction = {
@@ -54,10 +56,10 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
     })
   }
 
-  getTransaction(): void {
-    this.subscription = this.transactionService.getTransaction().subscribe(
+  //Method to get all transactions
+  getTransactions(): void {
+    this.subscription = this.transactionService.getTransactions().subscribe(
       (resp) => {
-        console.log(resp);
         this.dataSource = resp;
       }),
       (error) => {
@@ -66,11 +68,13 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
       }
   }
 
+  //Method to filter transactions on html
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  //Method to delete transaction when click on delete button
   deleteButton(element) {
     this.transactionService.deleteTransaction(element.id).subscribe(
       () => {
@@ -82,6 +86,7 @@ export class PastTransactionsComponent implements OnInit, OnDestroy {
       }
     );
   }
+  
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

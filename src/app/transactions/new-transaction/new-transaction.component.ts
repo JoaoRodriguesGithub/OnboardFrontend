@@ -1,6 +1,5 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { Category } from 'src/app/models/category.model';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { JWTTokenService } from 'src/app/services/jwt-token.service';
@@ -13,9 +12,13 @@ import { TransactionsService } from 'src/app/services/transactions.service';
   styleUrls: ['./new-transaction.component.css'],
 })
 export class NewTransactionComponent implements OnInit {
+   //variable to display the error message on HTML
   errorMessage: string = '';
+  //variable to diplay all categories on HTML
   categories: Category[];
+  //variable that stores the selected value on categories
   selectedValue: string;
+  //variable for the HTML form
   formGroup: FormGroup;
  
   constructor(
@@ -26,20 +29,20 @@ export class NewTransactionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //creating the formGroup
     this.formGroup = new FormGroup({
       date: new FormControl('', { validators: [Validators.required] }),
       category_id: new FormControl('', { validators: [Validators.required] }),
       amount: new FormControl('', { validators: [Validators.required] }),
     });
-
-    this.transactionsService.getTransaction().subscribe((resp) => {
-      console.log(resp)
+    //Getting all transactions from the API
+    this.transactionsService.getTransactions().subscribe((resp) => {
     },
       (error) => {
         this.errorHandler.handleError(error);
         this.errorMessage = this.errorHandler.errorMessage;
       });
-
+    //Getting all categories from the API
     this.transactionsService.getCategories().subscribe(
       (resp) => {
         this.loadTansactions(resp);
@@ -52,8 +55,11 @@ export class NewTransactionComponent implements OnInit {
   }
 
   onSubmit() {
+    //variable to store the token
     const tokenString = this.localStorageService.get('token');
+    //variable to decode the token
     const tokenInfo = this.jwtTokenService.getDecodedAccessToken(tokenString);
+    //variable to store the token id
     const userId = tokenInfo.id;
 
     const ctrl = new FormControl(userId);
@@ -65,7 +71,6 @@ export class NewTransactionComponent implements OnInit {
       this.transactionsService
         .postTransaction(this.formGroup.value)
         .subscribe((result) => {
-          console.log(result);
         }),
         (error) => {
           this.errorHandler.handleError(error);
