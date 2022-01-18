@@ -6,7 +6,7 @@ export const environment = {
   production: true
 };
 
-export const baseUrl = `https://onboardfrontend.herokuapp.com/`
+export const baseUrl = `https://onboardbackend.herokuapp.com/`
 
 /*
  * For easier debugging in development mode, you can import the following file
