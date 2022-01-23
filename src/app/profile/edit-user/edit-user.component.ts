@@ -25,7 +25,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     //Setting up the form validators
     this.formGroup = new FormGroup({
-      name: new FormControl('', { validators: [Validators.required] }),
+      name: new FormControl('', { validators: [Validators.required, Validators.maxLength(30)] }),
     });
   }
 
