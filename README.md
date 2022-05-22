@@ -1,5 +1,7 @@
 # OnboardFrontend
 
+Frontend code for Onboard  web application that was developed on Collaborative Software Development class @IPCA.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
 
 ## Development server
